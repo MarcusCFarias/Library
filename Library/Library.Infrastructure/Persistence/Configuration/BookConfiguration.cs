@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Library.Infrastructure.Persistence.Configuration
         {
             base.Configure(builder);
 
+            builder.ToTable("Book");
+
             builder.Property(p => p.Title)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -29,6 +32,9 @@ namespace Library.Infrastructure.Persistence.Configuration
 
             builder.HasIndex(p => p.ISBN)
                 .IsUnique();
+
+            builder.Property(p => p.Status)
+                .IsRequired();
 
             builder.Property(p => p.Year)
                 .IsRequired();
