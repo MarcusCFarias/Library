@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Domain.Enumns
+namespace Library.Application.Validators
 {
-    public enum BookStatus
+    internal class Class1
     {
-        Available = 1,
-        Loaned = 2,
-        Unavailable = 3
+       
+
+
+
     }
 }

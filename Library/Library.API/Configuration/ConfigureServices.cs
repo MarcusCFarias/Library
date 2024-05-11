@@ -1,4 +1,6 @@
-﻿using Library.Domain.Interfaces.Repositories;
+﻿using Library.Application.Services.Implementations;
+using Library.Application.Services.Interfaces;
+using Library.Domain.Interfaces.Repositories;
 using Library.Infrastructure.Persistence;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,8 @@ namespace Library.API.Configuration
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            services.AddScoped<IBookService, BookService>();
+
             return services;
         }
 
@@ -26,12 +30,6 @@ namespace Library.API.Configuration
             services.AddScoped<IRepositoryBook, RepositoryBook>();
 
             return services;
-        }
-
-        public static IApplicationBuilder AddApplication(this IApplicationBuilder application)
-        {
-
-            return application;
         }
     }   
 }

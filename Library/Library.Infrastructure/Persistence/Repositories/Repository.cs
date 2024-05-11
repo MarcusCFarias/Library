@@ -11,32 +11,36 @@ namespace Library.Infrastructure.Persistence.Repositories
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         protected Repository(AppDbContext context)
         {
             _context = context;
         }
-
-        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<int> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             var newEntity = _context.Set<TEntity>().Add(entity).Entity;
             await _context.SaveChangesAsync(cancellationToken);
-            return newEntity;
-        }
 
-        public Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize = 10, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
+            return newEntity.Id;
         }
-
-        public Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Set<TEntity>()
+                .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
         }
-
-        public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Set<TEntity>()
+                .AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+        }
+        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            _context.Set<TEntity>().Update(entity);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

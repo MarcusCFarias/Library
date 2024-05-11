@@ -1,4 +1,9 @@
-﻿using Library.Infrastructure.Persistence;
+﻿using Library.Application.DTOs.InputModels;
+using Library.Application.Services.Interfaces;
+using Library.Domain.Entities;
+using Library.Domain.Enumns;
+using Library.Domain.Interfaces.Repositories;
+using Library.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 
@@ -8,42 +13,66 @@ namespace Library.API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly AppDbContext _appDbContext;
-
-        public BooksController(AppDbContext dbContext)
+        private readonly IBookService _bookService;
+        public BooksController(IBookService bookService)
         {
-            _appDbContext = dbContext;
+            _bookService = bookService;
         }
 
         [HttpGet]
-        public IActionResult GetAll() //with pagination
+        public async Task<IActionResult> GetAll([FromQuery] int page = 1, int pageSize = 10)
         {
-            var teste = _appDbContext.Database;
+            var books = await _bookService.GetAllAsync(page, pageSize);
 
+            if (books.Count() <= 0)
+            {
+                return NoContent();
+            }
 
-
-            return NoContent();
+            return Ok(books);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            return NoContent();
+            var book = await _bookService.GetByIdAsync(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(book);
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public async Task<IActionResult> Create([FromBody] CreateBookInputModel bookInputModel)
         {
-            return NoContent();
+            var book = await _bookService.CreateBookAsync(bookInputModel);
+
+            return Ok(book);
         }
 
-        [HttpPut("{id}")]
+        [HttpGet("{genre}")]
+        public async Task<IActionResult> GetByGenre(string genre)
+        {
+            var books = await _bookService.GetBooksByGenreAsync(genre);
+
+            if (books.Count() <= 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(books);
+        }
+
+        [HttpPost("{id:int}")]
         public IActionResult Update(int id)
         {
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             return NoContent();

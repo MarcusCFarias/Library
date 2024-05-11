@@ -9,6 +9,7 @@ namespace Library.Domain.Interfaces.Repositories
 {
     public interface IRepositoryBook : IRepository<Book>
     {
-        Task<IEnumerable<Book>> GetByGenreAsync(string genre);
+        Task<IEnumerable<Book>> GetByGenreAsync(string genre, CancellationToken cancellationToken = default);
+        Task<Book?> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default);
     }
 }

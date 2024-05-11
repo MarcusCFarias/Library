@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Domain.Enumns
+namespace Library.Application.DTOs.Mappings
 {
-    public enum BookStatus
+    internal class MappingDtoToDomain
     {
-        Available = 1,
-        Loaned = 2,
-        Unavailable = 3
     }
 }

@@ -29,6 +29,10 @@ namespace Library.Infrastructure.Persistence.Configuration
                 .HasColumnType("date")
                 .IsRequired(false);
 
+            builder.Property(p => p.Fine)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired(false);
+
             builder.HasOne<Book>()
                 .WithMany()
                 .HasForeignKey(x => x.BookId)

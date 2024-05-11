@@ -1,9 +1,12 @@
-﻿using Library.Domain.Entities;
+﻿using Azure;
+using Library.Domain.Entities;
 using Library.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Persistence.Repositories
@@ -14,9 +17,27 @@ namespace Library.Infrastructure.Persistence.Repositories
         {
 
         }
-        public Task<IEnumerable<Book>> GetByGenreAsync(string genre)
+        public async Task<IEnumerable<Book>> GetByGenreAsync(string genre, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Set<Book>()
+                 .AsNoTracking()
+                 .Where(b => b.Genre.Contains(genre))
+                 .ToListAsync(cancellationToken);
+
+            //return await _context.Set<TEntity>()
+            //    .AsNoTracking()
+            //    .Skip((page - 1) * pageSize)
+            //    .Take(pageSize)
+            //    .ToListAsync(cancellationToken);
         }
+
+        public async Task<Book?> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Book>()
+                .AsNoTracking()
+                .SingleOrDefaultAsync(b => b.ISBN == isbn, cancellationToken);
+        }
+
+        
     }
 }
