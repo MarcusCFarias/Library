@@ -6,6 +6,7 @@ using Library.Domain.Interfaces.Repositories;
 using Library.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Library.API.Controllers
 {
@@ -32,7 +33,7 @@ namespace Library.API.Controllers
             return Ok(books);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var book = await _bookService.GetByIdAsync(id);
@@ -46,14 +47,14 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateBookInputModel bookInputModel)
+        public async Task<IActionResult> Create([FromBody] CreateBookInputModel createBookInputModel)
         {
-            var book = await _bookService.CreateBookAsync(bookInputModel);
+            var bookId = await _bookService.CreateBookAsync(createBookInputModel);
 
-            return Ok(book);
+            return CreatedAtAction(nameof(GetById), new { id = bookId }, createBookInputModel);
         }
 
-        [HttpGet("{genre}")]
+        [HttpGet("genre/{genre}")]
         public async Task<IActionResult> GetByGenre(string genre)
         {
             var books = await _bookService.GetBooksByGenreAsync(genre);
@@ -66,16 +67,20 @@ namespace Library.API.Controllers
             return Ok(books);
         }
 
-        [HttpPost("{id:int}")]
-        public IActionResult Update(int id)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateBookInputModel updateBookInputModel)
         {
-            return NoContent();
+            await _bookService.UpdateBookAsync(id, updateBookInputModel);
+
+            return AcceptedAtAction(nameof(GetById), new { id = id }, updateBookInputModel);
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return NoContent();
+            await _bookService.DeleteBookAsync(id);
+
+            return Ok();
         }
     }
 }

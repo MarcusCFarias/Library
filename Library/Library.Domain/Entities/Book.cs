@@ -13,11 +13,20 @@ namespace Library.Domain.Entities
             Year = year;
             Genre = genre;
         }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public BookStatus Status { get; set; }
-        public string ISBN { get; set; }
-        public int Year { get; set; }
-        public string Genre { get; set; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public BookStatus Status { get; private set; }
+        public string ISBN { get; private set; }
+        public int Year { get; private set; }
+        public string Genre { get; private set; }
+        public void UpdateBook(string title, string author, BookStatus bookStatus, string ISBN, int year, string genre)
+        {
+            Title = title;
+            Author = author;
+            Status = bookStatus;
+            this.ISBN = ISBN;
+            Year = year;
+            Genre = genre;
+        }
     }
 }

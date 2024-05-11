@@ -14,5 +14,7 @@ namespace Library.Application.Services.Interfaces
         Task<GetBookDetailViewModel> GetByIdAsync(int id);
         Task<int> CreateBookAsync(CreateBookInputModel createBookInputModel);
         Task<IEnumerable<GetBooksViewModel>> GetBooksByGenreAsync(string genre);
+        Task UpdateBookAsync(int id, UpdateBookInputModel createBookInputModel);
+        Task DeleteBookAsync(int id);
     }
 }

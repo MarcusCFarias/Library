@@ -2,6 +2,7 @@
 using Library.Application.DTOs.ViewModels;
 using Library.Application.Services.Interfaces;
 using Library.Domain.Entities;
+using Library.Domain.Enumns;
 using Library.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace Library.Application.Services.Implementations
         {
             var existingBook = await _bookRepository.GetByISBNAsync(inputModel.ISBN);
 
-            //não permitir criar um livro com o mesmo ISBN, fazer validacao
+            if (existingBook != null)
+                throw new Exception("Book already created, change the ISBN.");
 
             var book = new Book(inputModel.Title,
                 inputModel.Title,
@@ -32,6 +34,24 @@ namespace Library.Application.Services.Implementations
 
             return await _bookRepository.AddAsync(book);
         }
+
+        public async Task DeleteBookAsync(int id)
+        {
+            var book = await _bookRepository.GetByIdAsync(id);
+
+            if (book == null)
+                throw new Exception("Book not found");
+
+            book.UpdateBook(book.Title,
+                book.Author,
+                BookStatus.Unavailable,
+                book.ISBN,
+                book.Year,
+                book.Genre);
+
+            await _bookRepository.UpdateAsync(book);
+        }
+
         public async Task<IEnumerable<GetBooksViewModel>> GetAllAsync(int page, int pageSize)
         {
             var books = await _bookRepository.GetAllAsync(page, pageSize);
@@ -79,6 +99,22 @@ namespace Library.Application.Services.Implementations
             };
 
             return bookViewModel;
+        }
+        public async Task UpdateBookAsync(int id, UpdateBookInputModel updateBookInputModel)
+        {
+            var book = await _bookRepository.GetByIdAsync(id);
+
+            if (book == null)
+                throw new Exception("Book not found");
+
+            book.UpdateBook(updateBookInputModel.Title,
+                updateBookInputModel.Author,
+                updateBookInputModel.Status,
+                updateBookInputModel.ISBN,
+                updateBookInputModel.Year,
+                updateBookInputModel.Genre);
+
+            await _bookRepository.UpdateAsync(book);
         }
     }
 }

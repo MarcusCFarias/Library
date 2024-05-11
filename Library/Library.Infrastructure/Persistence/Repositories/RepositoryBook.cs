@@ -23,12 +23,6 @@ namespace Library.Infrastructure.Persistence.Repositories
                  .AsNoTracking()
                  .Where(b => b.Genre.Contains(genre))
                  .ToListAsync(cancellationToken);
-
-            //return await _context.Set<TEntity>()
-            //    .AsNoTracking()
-            //    .Skip((page - 1) * pageSize)
-            //    .Take(pageSize)
-            //    .ToListAsync(cancellationToken);
         }
 
         public async Task<Book?> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default)
