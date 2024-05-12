@@ -17,7 +17,7 @@ namespace Library.Infrastructure.Persistence.Repositories
         {
 
         }
-        public async Task<IEnumerable<Book>> GetByGenreAsync(string genre, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Book>> GetByGenreAsync(string genre, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _context.Set<Book>()
                  .AsNoTracking()
@@ -25,13 +25,11 @@ namespace Library.Infrastructure.Persistence.Repositories
                  .ToListAsync(cancellationToken);
         }
 
-        public async Task<Book?> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default)
+        public async Task<Book?> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _context.Set<Book>()
                 .AsNoTracking()
                 .SingleOrDefaultAsync(b => b.ISBN == isbn, cancellationToken);
         }
-
-        
     }
 }

@@ -4,14 +4,18 @@ using Library.Domain.Interfaces.Repositories;
 using Library.Infrastructure.Persistence;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Library.Application.Validators;
+using FluentValidation.AspNetCore;
 
 namespace Library.API.Configuration
 {
-    public static  class ConfigureServices
+    public static class ConfigureServices
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateBookValidator>());
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
@@ -31,5 +35,5 @@ namespace Library.API.Configuration
 
             return services;
         }
-    }   
+    }
 }

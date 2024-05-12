@@ -34,7 +34,6 @@ namespace Library.Application.Services.Implementations
 
             return await _bookRepository.AddAsync(book);
         }
-
         public async Task DeleteBookAsync(int id)
         {
             var book = await _bookRepository.GetByIdAsync(id);
@@ -51,7 +50,6 @@ namespace Library.Application.Services.Implementations
 
             await _bookRepository.UpdateAsync(book);
         }
-
         public async Task<IEnumerable<GetBooksViewModel>> GetAllAsync(int page, int pageSize)
         {
             var books = await _bookRepository.GetAllAsync(page, pageSize);
