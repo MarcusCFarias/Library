@@ -22,5 +22,6 @@ namespace Library.Domain.Entities
         public string Password { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
+        public virtual ICollection<BookLoan> BookLoans { get; private set; }
     }
 }

@@ -19,6 +19,7 @@ namespace Library.Domain.Entities
         public string ISBN { get; private set; }
         public int Year { get; private set; }
         public string Genre { get; private set; }
+        public ICollection<BookLoan> BookLoans { get; private set; }
         public void UpdateBook(string title, string author, BookStatus bookStatus, string ISBN, int year, string genre)
         {
             Title = title;
@@ -28,5 +29,7 @@ namespace Library.Domain.Entities
             Year = year;
             Genre = genre;
         }
+
+
     }
 }

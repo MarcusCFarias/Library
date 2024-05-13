@@ -1,5 +1,6 @@
 ﻿using Library.Application.DTOs.InputModels;
-using Library.Application.DTOs.ViewModels;
+using Library.Application.DTOs.Mappings;
+using Library.Application.DTOs.ViewModels.Books;
 using Library.Application.Services.Interfaces;
 using Library.Domain.Entities;
 using Library.Domain.Enumns;
@@ -26,11 +27,7 @@ namespace Library.Application.Services.Implementations
             if (existingBook != null)
                 throw new Exception("Book already created, change the ISBN.");
 
-            var book = new Book(inputModel.Title,
-                inputModel.Title,
-                inputModel.ISBN,
-                inputModel.Year,
-                inputModel.Genre);
+            var book = inputModel.MappingCreateBookInputModelToBook();
 
             return await _bookRepository.AddAsync(book);
         }
@@ -54,13 +51,7 @@ namespace Library.Application.Services.Implementations
         {
             var books = await _bookRepository.GetAllAsync(page, pageSize);
 
-            var booksViewModel = books.Select(book => new GetBooksViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Genre = book.Genre,
-                Year = book.Year
-            });
+            var booksViewModel = books.MappingBooksToBooksViewModel();
 
             return booksViewModel;
         }
@@ -68,13 +59,7 @@ namespace Library.Application.Services.Implementations
         {
             var books = await _bookRepository.GetByGenreAsync(genre);
 
-            var booksViewModel = books.Select(book => new GetBooksViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Genre = book.Genre,
-                Year = book.Year
-            });
+            var booksViewModel = books.MappingBooksToBooksViewModel();
 
             return booksViewModel;
         }
@@ -85,16 +70,7 @@ namespace Library.Application.Services.Implementations
             if (book == null)
                 return null;
 
-            var bookViewModel = new GetBookDetailViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Genre = book.Genre,
-                Year = book.Year,
-                Author = book.Author,
-                ISBN = book.ISBN,
-                Status = book.Status
-            };
+            var bookViewModel = book.MappingBooksToBookDetailViewModel();
 
             return bookViewModel;
         }

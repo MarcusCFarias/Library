@@ -4,6 +4,7 @@ using Library.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240512211541_changeLoanEntityName")]
+    partial class changeLoanEntityName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,31 +140,17 @@ namespace Library.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Library.Domain.Entities.BookLoan", b =>
                 {
-                    b.HasOne("Library.Domain.Entities.Book", "Book")
-                        .WithMany("BookLoans")
+                    b.HasOne("Library.Domain.Entities.Book", null)
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Library.Domain.Entities.User", "User")
-                        .WithMany("BookLoans")
+                    b.HasOne("Library.Domain.Entities.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Library.Domain.Entities.Book", b =>
-                {
-                    b.Navigation("BookLoans");
-                });
-
-            modelBuilder.Entity("Library.Domain.Entities.User", b =>
-                {
-                    b.Navigation("BookLoans");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,7 @@ using Library.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240512234017_correctFKRelation")]
+    partial class correctFKRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +78,9 @@ namespace Library.Infrastructure.Persistence.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BookId1")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
@@ -90,11 +96,18 @@ namespace Library.Infrastructure.Persistence.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
+                    b.HasIndex("BookId1");
+
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("BookLoan", (string)null);
                 });
@@ -137,16 +150,28 @@ namespace Library.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Library.Domain.Entities.BookLoan", b =>
                 {
-                    b.HasOne("Library.Domain.Entities.Book", "Book")
-                        .WithMany("BookLoans")
+                    b.HasOne("Library.Domain.Entities.Book", null)
+                        .WithMany("Loans")
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Library.Domain.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Library.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Library.Domain.Entities.User", "User")
                         .WithMany("BookLoans")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -156,7 +181,7 @@ namespace Library.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Library.Domain.Entities.Book", b =>
                 {
-                    b.Navigation("BookLoans");
+                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("Library.Domain.Entities.User", b =>

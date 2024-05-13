@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Persistence.Configuration
 {
-    internal class LoanConfiguration : BaseEntityConfiguration<Loan>
+    internal class BookLoanConfiguration : BaseEntityConfiguration<BookLoan>
     {
-        public override void Configure(EntityTypeBuilder<Loan> builder)
+        public override void Configure(EntityTypeBuilder<BookLoan> builder)
         {
             base.Configure(builder);
 
-            builder.ToTable("Loan");
+            builder.ToTable("BookLoan");
 
             builder.Property(p => p.StartDate)
                 .HasColumnType("date")
@@ -33,13 +33,13 @@ namespace Library.Infrastructure.Persistence.Configuration
                 .HasColumnType("decimal(18,2)")
                 .IsRequired(false);
 
-            builder.HasOne<Book>()
-                .WithMany()
+            builder.HasOne(x => x.Book)
+                .WithMany(x => x.BookLoans)
                 .HasForeignKey(x => x.BookId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne<User>()
-                .WithMany()
+            builder.HasOne(x => x.User)
+                .WithMany(x => x.BookLoans)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

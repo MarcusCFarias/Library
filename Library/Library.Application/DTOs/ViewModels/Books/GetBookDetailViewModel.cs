@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Application.DTOs.ViewModels
+namespace Library.Application.DTOs.ViewModels.Books
 {
     public class GetBookDetailViewModel
     {

@@ -20,6 +20,7 @@ namespace Library.API.Configuration
             services.AddSwaggerGen();
 
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookLoanService, BookLoanService>();
 
             return services;
         }
@@ -32,6 +33,7 @@ namespace Library.API.Configuration
             });
 
             services.AddScoped<IRepositoryBook, RepositoryBook>();
+            services.AddScoped<IRepositoryBookLoan, RepositoryBookLoan>();
 
             return services;
         }

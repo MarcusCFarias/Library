@@ -1,5 +1,5 @@
 ﻿using Library.Application.DTOs.InputModels;
-using Library.Application.DTOs.ViewModels;
+using Library.Application.DTOs.ViewModels.Books;
 using System;
 using System.Collections.Generic;
 using System.Linq;
