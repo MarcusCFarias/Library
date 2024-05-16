@@ -6,6 +6,9 @@ using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Library.Application.Validators;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Library.API.Configuration
 {
@@ -25,6 +28,24 @@ namespace Library.API.Configuration
             return services;
         }
 
+        public static IServiceCollection AddAuthetication(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = configuration.GetSection("Jwt:Issuer").Value,
+                    ValidAudience = configuration.GetSection("Jwt:Audience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:Secret").Value))
+
+                });
+
+
+            return services;
+        }
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>

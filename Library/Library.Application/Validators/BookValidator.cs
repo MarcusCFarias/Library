@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Library.Application.DTOs.InputModels;
+using Library.Application.DTOs.InputModels.Books;
 using Library.Domain.Enumns;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Library.Application.DTOs.InputModels;
+﻿using Library.Application.DTOs.InputModels.Books;
 using Library.Application.DTOs.Mappings;
 using Library.Application.DTOs.ViewModels.Books;
 using Library.Application.Services.Interfaces;

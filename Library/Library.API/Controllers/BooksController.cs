@@ -1,4 +1,4 @@
-﻿using Library.Application.DTOs.InputModels;
+﻿using Library.Application.DTOs.InputModels.Books;
 using Library.Application.Services.Interfaces;
 using Library.Domain.Entities;
 using Library.Domain.Enumns;

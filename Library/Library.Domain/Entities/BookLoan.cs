@@ -23,5 +23,18 @@ namespace Library.Domain.Entities
         public DateOnly EndDate { get; private set; }
         public DateOnly? ReturnDate { get; private set; }
         public decimal? Fine { get; private set; }
+
+        public string ReturnBook(DateOnly returnDate)
+        {
+            ReturnDate = returnDate;
+
+            if (returnDate > EndDate)
+            {
+                Fine = (returnDate.DayNumber - EndDate.DayNumber) * 0.5m;
+                return $"The book was returned with a delay of {returnDate.DayNumber - EndDate.DayNumber} days. The fine is {Fine}";
+            }
+
+            return "The book was returned on time";
+        }
     }
 }

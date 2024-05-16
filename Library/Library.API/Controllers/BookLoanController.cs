@@ -1,4 +1,7 @@
-﻿using Library.Application.Services.Interfaces;
+﻿using Library.Application.DTOs.InputModels.BookLoans;
+using Library.Application.DTOs.InputModels.Books;
+using Library.Application.Services.Implementations;
+using Library.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
@@ -26,17 +29,20 @@ namespace Library.API.Controllers
             return Ok(bookLoans);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetById(int id)
-        //{
-        //    var bookLoan = await _bookLoanService.GetByIdAsync(id);
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateBookLoanInputModel inputModel)
+        {
+            var bookId = await _bookLoanService.CreateBookLoanAsync(inputModel);
 
-        //    if (bookLoan == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return Ok(string.Format("Loan id {0}", 0));
+        }
 
-        //    return Ok(bookLoan);
-        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ReturnBook(int id)
+        {
+            var message = await _bookLoanService.ReturnBookAsync(id);
+
+            return Ok(message);
+        }
     }
 }

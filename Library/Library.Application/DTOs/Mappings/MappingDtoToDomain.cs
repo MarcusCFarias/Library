@@ -1,4 +1,6 @@
-﻿using Library.Application.DTOs.InputModels;
+﻿using Library.Application.DTOs.InputModels.BookLoans;
+using Library.Application.DTOs.InputModels.Books;
+using Library.Application.DTOs.ViewModels.BookLoans;
 using Library.Application.DTOs.ViewModels.Books;
 using Library.Domain.Entities;
 using System;
@@ -52,5 +54,28 @@ namespace Library.Application.DTOs.Mappings
             return bookDetailViewModel;
         }
 
+        internal static IEnumerable<GetBookLoanDetailViewModel> MappingBookLoanToBookLoanDetail(this IEnumerable<BookLoan> booksLoan)
+        {
+            var bookLoanDetail = booksLoan.Select(x => new GetBookLoanDetailViewModel
+            {
+                BookName = x.Book.Title,
+                UserName = x.User.Name,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
+                ReturnDate = x.ReturnDate,
+                Fine = x.Fine
+            });
+
+            return bookLoanDetail;
+        }
+        internal static BookLoan MappingCreateBookLoanInputModelToBookLoan(this CreateBookLoanInputModel inputModel)
+        {
+            var bookLoan = new BookLoan(inputModel.BookId, 
+                inputModel.UserId, 
+                new DateOnly(inputModel.StartDate.Year, inputModel.StartDate.Month, inputModel.StartDate.Day),
+                new DateOnly(inputModel.EndDate.Year, inputModel.EndDate.Month, inputModel.EndDate.Day));
+
+            return bookLoan;
+        }
     }
 }
