@@ -14,7 +14,8 @@ namespace Library.API
 
             builder.Services
                 .AddServices()
-                .AddInfrastructure(builder.Configuration);           
+                .AddInfrastructure(builder.Configuration)
+                .AddAuthentication(builder.Configuration);
 
             var app = builder.Build();
 

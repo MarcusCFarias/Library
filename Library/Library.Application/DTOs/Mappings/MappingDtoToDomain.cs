@@ -2,6 +2,7 @@
 using Library.Application.DTOs.InputModels.Books;
 using Library.Application.DTOs.ViewModels.BookLoans;
 using Library.Application.DTOs.ViewModels.Books;
+using Library.Application.DTOs.ViewModels.Users;
 using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,18 @@ namespace Library.Application.DTOs.Mappings
                 new DateOnly(inputModel.EndDate.Year, inputModel.EndDate.Month, inputModel.EndDate.Day));
 
             return bookLoan;
+        }
+
+        internal static UserViewModel MappingUserToUserViewModel(this User user)
+        {
+            var userViewModel = new UserViewModel
+            {
+                Name = user.Name,
+                Email = user.Email,
+                IsActive = user.IsActive
+            };
+
+            return userViewModel;
         }
     }
 }

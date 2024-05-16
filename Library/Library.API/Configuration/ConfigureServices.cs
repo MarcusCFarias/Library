@@ -9,6 +9,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Library.Infrastructure.Auth;
 
 namespace Library.API.Configuration
 {
@@ -24,24 +25,28 @@ namespace Library.API.Configuration
 
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookLoanService, BookLoanService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
 
-        public static IServiceCollection AddAuthetication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
+            services.AddScoped<IAuthService, AuthService>();
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options => new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateLifetime = true,
 
-                    ValidIssuer = configuration.GetSection("Jwt:Issuer").Value,
-                    ValidAudience = configuration.GetSection("Jwt:Audience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:Secret").Value))
 
-                });
+            //        ValidIssuer = configuration.GetSection("Jwt:Issuer").Value,
+            //        ValidAudience = configuration.GetSection("Jwt:Audience").Value,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:Secret").Value))
+
+            //    });
 
 
             return services;
@@ -55,6 +60,7 @@ namespace Library.API.Configuration
 
             services.AddScoped<IRepositoryBook, RepositoryBook>();
             services.AddScoped<IRepositoryBookLoan, RepositoryBookLoan>();
+            services.AddScoped<IRepositoryUser, RepositoryUser>();
 
             return services;
         }

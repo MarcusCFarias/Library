@@ -9,5 +9,6 @@ namespace Library.Domain.Interfaces.Repositories
 {
     public interface IRepositoryUser : IRepository<User>
     {
+        Task<User> LoginAsync(string email, string password);
     }
 }

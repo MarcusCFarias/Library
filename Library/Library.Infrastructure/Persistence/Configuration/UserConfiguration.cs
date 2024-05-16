@@ -29,6 +29,10 @@ namespace Library.Infrastructure.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(p => p.Role)
+                .IsRequired()
+                .HasMaxLength(20);
+
             builder.Property(p => p.IsActive)
                 .HasDefaultValue(true)
                 .IsRequired();
