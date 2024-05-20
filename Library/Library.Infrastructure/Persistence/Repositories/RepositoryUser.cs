@@ -16,7 +16,7 @@ namespace Library.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<User> LoginAsync(string email, string password)
+        public async Task<User?> LoginAsync(string email, string password)
         {
             return await _context.Set<User>()
                 .SingleOrDefaultAsync(u => u.Email == email

@@ -35,7 +35,6 @@ namespace Library.Infrastructure.Auth
                 return builder.ToString();
             }
         }
-
         public string GenerateJwtToken(string email, string role)
         {
             var issuer = _configuration["Jwt:Issuer"];
@@ -47,7 +46,7 @@ namespace Library.Infrastructure.Auth
 
             var claims = new List<Claim>
             {
-                new Claim("userName", email),
+                new Claim("email", email),
                 new Claim(ClaimTypes.Role, role)
             };
 

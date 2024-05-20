@@ -12,6 +12,7 @@ namespace Library.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             builder.Services
                 .AddServices()
                 .AddInfrastructure(builder.Configuration)
@@ -23,11 +24,12 @@ namespace Library.API
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library.API v1"));
             }
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

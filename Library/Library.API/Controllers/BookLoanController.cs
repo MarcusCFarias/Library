@@ -2,12 +2,14 @@
 using Library.Application.DTOs.InputModels.Books;
 using Library.Application.Services.Implementations;
 using Library.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BookLoanController : ControllerBase
     {
         private readonly IBookLoanService _bookLoanService;

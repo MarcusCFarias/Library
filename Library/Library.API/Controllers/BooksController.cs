@@ -4,6 +4,7 @@ using Library.Domain.Entities;
 using Library.Domain.Enumns;
 using Library.Domain.Interfaces.Repositories;
 using Library.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -12,6 +13,7 @@ namespace Library.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;

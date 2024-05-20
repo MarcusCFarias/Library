@@ -9,6 +9,7 @@ namespace Library.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -25,6 +26,7 @@ namespace Library.API.Controllers
             return Ok(user);
         }
         [HttpPost("Register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] UserRegisterInputModel inputModel)
         {
             int userId = await _userService.RegisterUserAsync(inputModel);
@@ -32,14 +34,14 @@ namespace Library.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = userId }, inputModel);
         }
         [HttpPut("login")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginInputModel userLoginInputModel)
         {
             var loginUserViewModel = await _userService.LoginAsync(userLoginInputModel);
 
             if (loginUserViewModel == null)
             {
-                return BadRequest("Usuário ou senha incorretos!");
+                return Unauthorized("Usuário ou senha incorretos!");
             }
 
             return Ok(loginUserViewModel);

@@ -29,7 +29,5 @@ namespace Library.Domain.Entities
             Year = year;
             Genre = genre;
         }
-
-
     }
 }

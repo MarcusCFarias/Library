@@ -44,9 +44,11 @@ namespace Library.Application.Services.Implementations
             if (bookLoan == null)
                 throw new Exception("Book loan not found");
 
-            var message = bookLoan.ReturnBook(DateOnly.FromDateTime(DateTime.Now));
+            var actualDate = DateOnly.FromDateTime(DateTime.Now);
 
-            await _repositoryBookLoan.UpdateAsync(bookLoan);
+            var message = bookLoan.ReturnBook(actualDate);
+
+            _repositoryBookLoan.UpdateAsync(bookLoan);
 
             return message;
         }

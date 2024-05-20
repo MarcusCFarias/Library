@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Library.Application.DTOs.InputModels.BookLoans;
 using Library.Application.DTOs.InputModels.Books;
 using Library.Domain.Enumns;
 using System;
@@ -86,6 +87,36 @@ namespace Library.Application.Validators
                 .NotEmpty()
                 .Must(x => Enum.IsDefined(typeof(BookStatus), x))
                 .WithMessage("Status must be between 1 and 3.");
+        }
+    }
+
+    public class  BookLoanValidator:AbstractValidator<CreateBookLoanInputModel>
+    {
+        public BookLoanValidator()
+        {
+            RuleFor(x => x.BookId)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(0)
+                .WithMessage("BookId must be greater than 0.");
+
+            RuleFor(x => x.UserId)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(0)
+                .WithMessage("UserId must be greater than 0.");
+
+            RuleFor(x => x.StartDate)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(DateTime.Now)
+                .WithMessage("StartDate must be greater than actual date.");
+
+            RuleFor(x => x.EndDate)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(DateTime.Now.AddDays(7))
+                .WithMessage("EndDate must be greater than one week after start date");
         }
     }
 }
