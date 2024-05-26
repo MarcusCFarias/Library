@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Application", "Libr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "Library.Infrastructure\Library.Infrastructure.csproj", "{448DAE5C-FD51-47B9-A196-3B4795867267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UnitTests", "Library.UnitTests\Library.UnitTests.csproj", "{8C865224-CAD3-45C0-BA62-010F16172147}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{448DAE5C-FD51-47B9-A196-3B4795867267}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{448DAE5C-FD51-47B9-A196-3B4795867267}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{448DAE5C-FD51-47B9-A196-3B4795867267}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C865224-CAD3-45C0-BA62-010F16172147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C865224-CAD3-45C0-BA62-010F16172147}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C865224-CAD3-45C0-BA62-010F16172147}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C865224-CAD3-45C0-BA62-010F16172147}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
