@@ -9,6 +9,9 @@
 </p>
 
 ## 1. Screenshots or Demo
+![EndPointsOverview](https://github.com/MarcusCFarias/Library/assets/77988058/590c444a-0654-44d5-87a8-789fb6781267)
+![ProjectVision](https://github.com/MarcusCFarias/Library/assets/77988058/450b4e87-6a96-4258-b2dc-4d3e9eb64f30)
+![ResponseExample](https://github.com/MarcusCFarias/Library/assets/77988058/3fded9af-291e-4618-abae-512b4d16f89a)
 
 ## 2. About this project
 #### 2.1 Description
